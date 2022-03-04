@@ -16,7 +16,7 @@ pub fn parse_code_block(lines: &[&str]) -> Option<(Block, usize)> {
     let mut backtick_closed = false;
 
     for line in lines {
-        if !backtick_opened && CODE_BLOCK_SPACES.is_match(line) {
+        /*if !backtick_opened && CODE_BLOCK_SPACES.is_match(line) {
             if line_number > 0 && !content.is_empty() {
                 content.push('\n');
             }
@@ -33,7 +33,7 @@ pub fn parse_code_block(lines: &[&str]) -> Option<(Block, usize)> {
                 content.push_str(&line[1..line.len()]);
             }
             line_number += 1;
-        } else if CODE_BLOCK_BACKTICKS.is_match(line) {
+        } else*/ if CODE_BLOCK_BACKTICKS.is_match(line) {
             line_number += 1;
 
             if !backtick_opened && !(line_number == 0 && line.get(3..).is_some()) {

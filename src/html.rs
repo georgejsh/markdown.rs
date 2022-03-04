@@ -151,12 +151,12 @@ fn escape(text: &str, replace_entities: bool) -> String {
         static ref AMPERSAND: Regex = Regex::new(r"&amp;(?P<x>\S+;)").unwrap();
     }
 
-    let replaced = text
-        .replace("&", "&amp;")
-        .replace("<", "&lt;")
-        .replace("\"", "&quot;")
-        .replace("'", "&#8217;")
-        .replace(">", "&gt;");
+    let replaced = text.to_string();
+    //    .replace("&", "&amp;")
+    //    .replace("<", "&lt;")
+    //    .replace("\"", "&quot;")
+    //    .replace("'", "&#8217;")
+    //    .replace(">", "&gt;");
 
     // We can't do lookarounds in the regex crate to match only ampersands with
     // no entity; afterwards, so we do this ugly hack where we revert the replacement
@@ -220,6 +220,7 @@ fn format_codeblock(lang: &Option<String>, elements: &str) -> String {
             &escape(elements, false)
         )
     }
+    //elements.to_string()
 }
 
 fn format_blockquote(elements: &[Block]) -> String {
