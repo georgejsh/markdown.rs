@@ -6,9 +6,14 @@ pub fn parse_code(text: &str) -> Option<(Span, usize)> {
     lazy_static! {
         static ref CODE_SINGLE: Regex = Regex::new(r"^`(?P<text>.+?)`").unwrap();
         static ref CODE_DOUBLE: Regex = Regex::new(r"^``(?P<text>.+?)``").unwrap();
+        static ref CODE_TRIPLE: Regex = Regex::new(r"^```(?P<text>.+?)```").unwrap();
     }
 
-    if CODE_DOUBLE.is_match(text) {
+    if CODE_TRIPLE.is_match(text) {
+        let caps = CODE_TRIPLE.captures(text).unwrap();
+        let t = caps.name("text").unwrap().as_str();
+        return Some((Code(t.to_owned()), t.len() + 6));
+    }else if CODE_DOUBLE.is_match(text) {
         let caps = CODE_DOUBLE.captures(text).unwrap();
         let t = caps.name("text").unwrap().as_str();
         return Some((Code(t.to_owned()), t.len() + 4));
