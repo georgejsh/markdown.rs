@@ -7,7 +7,7 @@ use regex::Regex;
 pub fn parse_ordered_list(lines: &[&str]) -> Option<(Block, usize)> {
     lazy_static! {
         static ref LIST_BEGIN: Regex =
-            Regex::new(r"^(?P<indent> *)(?P<numbering>[0-9.]+|[aAiI]+\.) (?P<content>.*)").unwrap();
+            Regex::new(r"^(?P<indent> *)(?P<numbering>[0-9]\.+|[aAiI]+\.) (?P<content>.*)").unwrap();
         static ref NEW_PARAGRAPH: Regex = Regex::new(r"^ +").unwrap();
         static ref INDENTED: Regex = Regex::new(r"^ {0,4}(?P<content>.*)").unwrap();
     }
