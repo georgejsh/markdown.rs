@@ -1,5 +1,5 @@
 use parser::Span;
-use parser::Span::{Literal, Text};
+use parser::Span::{ Text};
 
 mod br;
 mod code;
@@ -58,25 +58,10 @@ pub fn parse_spans(text: &str) -> Vec<Span> {
     tokens
 }
 
-fn parse_escape(text: &str) -> Option<(Span, usize)> {
-    let mut chars = text.chars();
-    if let Some('\\') = chars.next() {
-        return match chars.next() {
-            Some(x @ '\\') | Some(x @ '`') | Some(x @ '*') | Some(x @ '_') | Some(x @ '{')
-            | Some(x @ '}') | Some(x @ '[') | Some(x @ ']') | Some(x @ '(') | Some(x @ ')')
-            | Some(x @ '#') | Some(x @ '+') | Some(x @ '-') | Some(x @ '.') | Some(x @ '!') => {
-                Some((Literal(x), 2))
-            }
-            _ => None,
-        };
-    }
-    None
-}
 
 fn parse_span(text: &str) -> Option<(Span, usize)> {
     pipe_opt!(
     text
-    => parse_escape
     => parse_code
     => parse_strong
     => parse_emphasis
